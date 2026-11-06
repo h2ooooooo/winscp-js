@@ -1,0 +1,50 @@
+**[Read the documentation](https://h2ooooooo.github.io/winscp-js/)**
+
+# winscp-js
+
+Read WinSCP INI settings, registry sessions and registry exports, including transfer profiles and SSH tunnels. Supported internal password formats can be decoded explicitly; external/master-password blobs remain locked.
+
+## Install and read profiles
+
+~~~sh
+npm install @jalsoedesign/winscp-core
+npm install --global @jalsoedesign/winscp-cli
+~~~
+
+~~~ts
+import {WinScpProfileSource} from '@jalsoedesign/winscp-core';
+
+const source = await WinScpProfileSource.fromFile('WinSCP.ini');
+console.log(source.list());
+~~~
+
+~~~sh
+winscp-js sources --json
+winscp-js list --file WinSCP.ini --json
+winscp-js search example --file WinSCP.ini
+winscp-js get work --file WinSCP.ini --json
+~~~
+
+Node 22.22.2 or newer is required. Read commands do not change application settings. Discovery reports candidate storage; ambiguous installations require explicit selection. Windows-native storage and process discovery require Windows. See --help for the application's file, directory, registry and installation options.
+
+Normalized profiles and default CLI output contain metadata and credential references. getNativeSettings() explicitly returns native settings and may contain secrets. --show-password requests supported credential resolution; unsupported encryption is reported without fabricating a password.
+
+## Write and sync
+
+write and sync create previews. apply is a separate operation; write-status checks availability without mutation. Existing profiles require explicit update/upsert mode, repeated on apply. Stored passwords, key contents and host trust policies are not copied. Unknown native settings are preserved where supported, and unsupported conversions are refused.
+
+Built-in apply requires Windows. Writers recheck revisions, application processes and known lock markers. Files use exclusive handles and protected recovery backups. Registry writes default to native transactions and refuse unavailable capability. Explicit --registry-mode guarded enables checks, backups and conditional rollback without atomicity; select it for both preview and apply. Keep the application and other settings writers closed. There is no force or lock bypass.
+
+[Writing policies, format boundaries and recovery](https://github.com/h2ooooooo/portline/blob/main/docs/profile-writing.md).
+
+Portline manages profiles, selection, credentials references and guarded settings changes. This repository supplies the application adapter and executable. Dockline provides separate SSH, transfer and key operations.
+
+## Development
+
+See the [development guide](docs/development.md) for independent builds, linting, testing and packed consumer checks.
+
+[Documentation](https://h2ooooooo.github.io/winscp-js/) · [Quick start](https://h2ooooooo.github.io/winscp-js/guide/quick-start) · [API reference](https://h2ooooooo.github.io/winscp-js/reference/api)
+
+## Runnable examples
+
+[Run a local demo](docs/guide/local-demo.md) for one-command examples and captured output. Profile demos use synthetic settings and make no remote connections.
