@@ -34,3 +34,7 @@ WinSCP already stores the connection details, key paths and remote directories u
 SFTP/FTP profile projection does not turn unsupported SCP, WebDAV or S3 settings into supported transfers. [Dockline](https://h2ooooooo.github.io/dockline/) separately provides transport execution. See the [API reference](/reference/api) for supported native settings.
 
 [Browse related application libraries](https://h2ooooooo.github.io/portline/libraries/).
+
+## Reuse a saved connection
+
+[Connect a selected profile](/api/integration) through the optional shared Portline–Dockline integration. Use the same scoped execution API across application readers while keeping native parsing and metadata queries free of transport dependencies.

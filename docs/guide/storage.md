@@ -35,3 +35,5 @@ Built-in live registry/process inspection requires Windows; INI and .reg exports
 The reader projects supported SFTP, FTP/TLS and SSH-hop metadata. SCP, WebDAV, S3 and other native protocols are not turned into supported Dockline sessions. Per-session unknown properties remain available through native access; the adapter is not a complete application-preferences export or WinSCP defaults-merging engine. Supported internal password obfuscation can be resolved explicitly; recognized master-password/external markers remain locked; malformed or unknown encodings are unsupported.
 
 Executable/version metadata is included only when inspection establishes it. Source discovery and credential resolution do not test a remote login.
+
+For an explicit live operation after selecting a profile, use [the shared connection walkthrough](/api/integration). Native-only execution requirements are represented as `unsupportedOptions`; reading a profile does not grant permission to discard them.

@@ -75,3 +75,21 @@ test('discovery honors running /ini= path and does not serialize process argumen
     assert.equal(result.candidates.find(item => item.id === result.selectedSourceId).location, filename);
     assert.ok(!JSON.stringify(result).includes('do-not-print'));
 });
+
+test('execution projection preserves FTP mode and UTF-8 and blocks native-only routing', () => {
+    const source = WinScpProfileSource.fromSessions({id: 'fixture', application: 'winscp'}, [{
+        name: 'ftp', settings: {
+            HostName: 'ftp.example', FSProtocol: '5', Ftps: '1', FtpPasvMode: '0', Utf: '1',
+        },
+    }, {
+        name: 'proxy', settings: {HostName: 'ssh.example', ProxyMethod: '3', Utf: '0'},
+    }]);
+    const ftp = source.get('ftp').connections[0];
+
+    assert.equal(ftp.tls, 'implicit');
+    assert.equal(ftp.endpoint.port, 990);
+    assert.equal(ftp.passive, false);
+    assert.deepEqual(ftp.filenameEncoding, {charset: 'utf8'});
+    assert.deepEqual(source.get('proxy').connections[0].unsupportedOptions,
+        ['ProxyMethod', 'Utf=0 (native ANSI code page)']);
+});

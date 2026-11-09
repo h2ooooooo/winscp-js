@@ -22,3 +22,7 @@ Install `@jalsoedesign/winscp-core` to use the library. The separate `@jalsoedes
 SFTP/FTP profile projection does not turn unsupported SCP, WebDAV or S3 settings into supported transfers. Dockline separately provides transport execution.
 
 Application adapters retain native provenance and diagnostics. Portline supplies shared contracts/querying/writer guards; Dockline is a separate execution library. For terminal commands, switch to the [CLI documentation](/cli/).
+
+## Connect through the shared integration
+
+Use [shared FTP/SFTP and SSH execution](/api/integration) to reuse a selected normalized profile with `@jalsoedesign/portline-dockline`. The guide includes reader-specific source creation, optional client installation, scoped cleanup and trust/authentication requirements. Native readers do not open connections while listing profiles.

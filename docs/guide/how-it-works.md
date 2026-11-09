@@ -66,3 +66,7 @@ Private-key paths do not load key contents. Raw native settings may contain stor
 A source is a snapshot; reopen it after settings change. Reading does not transfer files, open a tunnel or modify the native store. Dockline separately provides live transfer and SSH operations for supported connection settings.
 
 Use the [API quick start](/api/quick-start), [CLI quick start](/cli/quick-start) or [storage guide](/guide/storage). [Profile writing](/guide/writing) describes the separate preview/apply operation, native field preservation and lock checks.
+
+## Shared execution after native interpretation
+
+The source now exposes normalized execution details alongside metadata. `@jalsoedesign/portline-dockline` performs the shared mapping and delegates live sessions to optional Dockline clients. Native-only requirements appear in `unsupportedOptions`; they are refused rather than dropped. Read [the scoped source-to-session walkthrough](/api/integration) for supported operations and explicit trust/authentication options.

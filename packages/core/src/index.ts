@@ -96,8 +96,19 @@ export class WinScpProfileSource extends NativeProfileSource {
             const tlsMode = text(settings, 'Ftps', '0');
             const protocol = ftp ? tlsMode === '0' ? 'ftp' : 'ftps' : ssh ? 'sftp' :
                 fsProtocol === '0' ? 'scp' : fsProtocol === '6' ? 'webdav' : fsProtocol === '7' ? 's3' : fsProtocol;
+            const unsupportedOptions = [
+                ...(text(settings, 'ProxyMethod', '0') !== '0' ? ['ProxyMethod'] : []),
+                ...(text(settings, 'FtpAccount') ? ['FtpAccount'] : []),
+                ...(text(settings, 'SftpServer') ? ['SftpServer'] : []),
+                ...(text(settings, 'PostLoginCommands') ? ['PostLoginCommands'] : []),
+                ...(text(settings, 'SourceAddress') ? ['SourceAddress'] : []),
+                ...['Cipher', 'KEX', 'HostKey'].filter(key => text(settings, key)),
+                ...(text(settings, 'Utf', '2') === '0' ? ['Utf=0 (native ANSI code page)'] : []),
+            ];
             const base = {
                 id: 'connection',
+                unsupportedOptions,
+                filenameEncoding: text(settings, 'Utf', '2') === '1' ? {charset: 'utf8'} : undefined,
                 endpoint: {
                     host: text(settings, 'HostName'),
                     port: port(text(settings, 'PortNumber'), ftp ? tlsMode === '1' ? 990 : 21 : 22),
@@ -117,6 +128,7 @@ export class WinScpProfileSource extends NativeProfileSource {
                 kind: 'ftp',
                 protocol: protocol as 'ftp' | 'ftps',
                 tls: tlsMode === '0' ? 'none' : tlsMode === '1' ? 'implicit' : 'explicit',
+                passive: text(settings, 'FtpPasvMode') ? text(settings, 'FtpPasvMode') !== '0' : undefined,
                 remoteDirectory: text(settings, 'RemoteDirectory'),
             } : ssh ? {
                 ...base,
@@ -129,6 +141,10 @@ export class WinScpProfileSource extends NativeProfileSource {
             if (base.via) {
                 connections.push({
                     id: 'ssh',
+                    unsupportedOptions: [
+                        ...(text(settings, 'ProxyMethod', '0') !== '0' ? ['ProxyMethod'] : []),
+                        ...(text(settings, 'TunnelHostKey') ? ['TunnelHostKey'] : []),
+                    ],
                     kind: 'ssh',
                     protocol: 'ssh',
                     endpoint: {
