@@ -5,8 +5,8 @@ Read WinSCP INI settings, registry sessions and registry exports, including tran
 ## Install and read profiles
 
 ~~~sh
-npm install @jalsoedesign/winscp-core@rc
-npm install --global @jalsoedesign/winscp-cli@rc
+npm install @jalsoedesign/winscp-core
+npm install --global @jalsoedesign/winscp-cli
 ~~~
 
 ~~~ts

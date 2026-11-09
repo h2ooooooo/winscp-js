@@ -7,7 +7,7 @@ WinSCP JS reads native settings. The optional shared `@jalsoedesign/portline-doc
 Use Node.js 22.22.2 or newer for the normalized adapter and shared bridge. Install the reader, the shared bridge and the client needed for this example:
 
 ```sh
-npm install @jalsoedesign/winscp-core@rc @jalsoedesign/portline-dockline@rc @jalsoedesign/dockline-sftp-client@rc
+npm install @jalsoedesign/winscp-core @jalsoedesign/portline-dockline @jalsoedesign/dockline-sftp-client
 ```
 
 | Requested operation | Optional client |
